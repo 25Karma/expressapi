@@ -14,10 +14,11 @@ player.get('/player/:slug', async (req,res) => {
 	
 	// Get the value from the cache
 	const cachedValue = await client.get(slug);
-	console.log(cachedValue)
 	if (cachedValue !== null) {
 		successfulJson.mojang = filters.filterMojang(cachedValue);
 	}
+
+	// If slug is not found in cache, call the Mojang API
 	else {
 		const mojangResponse = await requests.getMojang(slug);
 		if (mojangResponse.ok) {
@@ -37,7 +38,7 @@ player.get('/player/:slug', async (req,res) => {
 		}
 	}
 	
-	// Fetching data from Hypixel API
+	// Call the Hypixel API
 	const uuid = successfulJson.mojang.uuid;
 	const hypixelResponses = await Promise.all([
 		requests.getHypixelPlayer(uuid),
@@ -72,19 +73,23 @@ player.get('/player/:slug', async (req,res) => {
 	successfulJson.friends = filters.filterFriends(await friendsResponse.json());
 	successfulJson.guild = (await guildResponse.json()).guild;
 	
-	client.set(slug, Object.assign(
-		{},
-		successfulJson.mojang,
-		...[
-			'rank', 
-			'monthlyPackageRank', 
-			'newPackageRank', 
-			'packageRank', 
-			'prefix', 
-			'rankPlusColor', 
-			'monthlyRankColor'
-		].map(n => ({[n]: successfulJson.player[n]}))
-	));
-
+	// Add to the cache if the entry was not found previously
+	if (cachedValue === null) {
+		client.set(slug, Object.assign(
+			{},
+			successfulJson.mojang,
+			...[
+				'rank', 
+				'monthlyPackageRank', 
+				'newPackageRank', 
+				'packageRank', 
+				'prefix', 
+				'rankPlusColor', 
+				'monthlyRankColor'
+			].map(n => ({[n]: successfulJson.player[n]}))
+		));
+	}
+	
+	// Send the data to the endpoint
 	return res.send(successfulJson)
 });
