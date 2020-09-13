@@ -1,13 +1,15 @@
 import express from 'express';
 
+import { ratelimit } from '../middlewares';
 import { cacheClient } from '../utils/caches';
 import * as filters from '../utils/filters';
 import * as requests from '../utils/requests';
 
 export const player = express.Router();
 
+player.use('/player/:slug', ratelimit(12));
 player.get('/player/:slug', async (req,res) => {
-	const client = cacheClient('NAME')
+	const client = cacheClient('NAME');
 	const slug = req.params.slug;
 	let successfulJson = {success: true, slug};
 	let failedJson = {success: false, slug};
@@ -75,7 +77,7 @@ player.get('/player/:slug', async (req,res) => {
 	
 	// Add to the cache if the entry was not found previously
 	if (cachedValue === null) {
-		client.set(slug, Object.assign(
+		const newCacheValue = Object.assign(
 			{},
 			successfulJson.mojang,
 			...[
@@ -87,7 +89,9 @@ player.get('/player/:slug', async (req,res) => {
 				'rankPlusColor', 
 				'monthlyRankColor'
 			].map(n => ({[n]: successfulJson.player[n]}))
-		));
+		);
+		client.set(successfulJson.mojang.username, newCacheValue);
+		client.set(uuid, newCacheValue);
 	}
 	
 	// Send the data to the endpoint

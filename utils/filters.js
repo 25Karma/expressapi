@@ -1,3 +1,7 @@
+export function sanitizeID(id) {
+	return id.split('-').join('').toLowerCase();
+}
+
 export function filterMojang(json) {
 	const filtered = {};
 	['username', 'uuid'].forEach(n => {filtered[n] = json[n]});
@@ -45,6 +49,21 @@ export function filterPlayer(json) {
 		}
 	}
 	filtered.questsCompleted = questsCompleted;
+	return filtered;
+}
+
+export function filterName(json) {
+	const player = json.player;
+	const filtered = {};
+	[
+		'rank', 
+		'monthlyPackageRank', 
+		'newPackageRank', 
+		'packageRank', 
+		'prefix', 
+		'rankPlusColor', 
+		'monthlyRankColor'
+	].map(n => {filtered[n] = player[n]});
 	return filtered;
 }
 
