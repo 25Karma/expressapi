@@ -1,14 +1,8 @@
-import express from 'express';
-
-import { ratelimit } from '../middlewares';
 import { cacheClient } from '../utils/caches';
 import * as filters from '../utils/filters';
 import * as requests from '../utils/requests';
 
-export const player = express.Router();
-
-player.use('/player/:slug', ratelimit(12));
-player.get('/player/:slug', async (req,res) => {
+export async function player(req,res) {
 	const client = cacheClient('NAME');
 	const slug = req.params.slug;
 	let successfulJson = {success: true, slug};
@@ -93,7 +87,9 @@ player.get('/player/:slug', async (req,res) => {
 		client.set(successfulJson.mojang.username, newCacheValue);
 		client.set(uuid, newCacheValue);
 	}
+
+	client.close();
 	
 	// Send the data to the endpoint
 	return res.send(successfulJson)
-});
+}

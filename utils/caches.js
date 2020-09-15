@@ -25,6 +25,9 @@ export function cacheClient(name) {
 				sanitizeID(key), 
 				Buffer.from(JSON.stringify(val)), 
 				{expires: 24*60*60});
-		}
+		},
+		close: () => {
+			client.close()
+		},
 	}
 }
