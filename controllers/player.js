@@ -91,5 +91,5 @@ export async function player(req,res) {
 	client.close();
 	
 	// Send the data to the endpoint
-	return res.send(successfulJson)
+	return res.json(successfulJson)
 }

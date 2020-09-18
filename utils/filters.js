@@ -1,7 +1,3 @@
-export function sanitizeID(id) {
-	return id.split('-').join('').toLowerCase();
-}
-
 export function filterMojang(json) {
 	const filtered = {};
 	['username', 'uuid'].forEach(n => {filtered[n] = json[n]});

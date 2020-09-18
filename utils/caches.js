@@ -1,7 +1,5 @@
 import memjs from 'memjs';
 
-import { sanitizeID } from '../utils/filters';
-
 export function cacheClient(name) {
 	const client = memjs.Client.create(
 		process.env[`${name}_CACHE_SERVERS`],
@@ -24,10 +22,14 @@ export function cacheClient(name) {
 			client.set(
 				sanitizeID(key), 
 				Buffer.from(JSON.stringify(val)), 
-				{expires: 24*60*60});
+				{expires: 3*24*60*60});
 		},
 		close: () => {
 			client.close()
 		},
 	}
+}
+
+function sanitizeID(id) {
+	return id.split('-').join('').toLowerCase();
 }

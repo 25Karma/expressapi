@@ -5,5 +5,8 @@ export async function cache(req, res) {
 	const slug = req.params.slug;
 
 	const cachedValue = await client.get(slug);
-	res.send(cachedValue);
+
+	client.close();
+
+	return res.json(cachedValue);
 }

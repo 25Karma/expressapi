@@ -37,17 +37,20 @@ export async function guild(req, res) {
 
 	const guildResponse = await requests.getHypixelGuild(mojang.uuid);
 	successfulJson.guild = (await guildResponse.json()).guild;
+	const rateLimitRemaining = guildResponse.headers.get('ratelimit-remaining');
+	const rateLimitBuffer = 30;
 
 	if (successfulJson.guild) {
+		let membersToFetch = Math.max(rateLimitRemaining - rateLimitBuffer, 0);
 		const memberList = successfulJson.guild.members;
-		const cachedValues = await Promise.all(memberList.map(n => client.get(n.uuid)))
-		const memberJsonList = await Promise.all(memberList.map(async (n,i) => {
-			const cachedValue = cachedValues[i];
+		const memberJsonList = await Promise.all(memberList.map(async n => {
+			const cachedValue = await client.get(n.uuid);
 			const uuid = n.uuid;
 			if (cachedValue !== null) {
 				return {[uuid]: cachedValue};
 			}
-			else {
+			else if (membersToFetch > 0) {
+				membersToFetch--;
 				const mojangResponse = await requests.getMojang(uuid);
 				if (!mojangResponse.ok) {
 					return null;
@@ -64,11 +67,14 @@ export async function guild(req, res) {
 				client.set(newCacheValue.uuid, newCacheValue);
 				return {[uuid]: newCacheValue};
 			}
+			else {
+				return null;
+			}
 		}));
 		successfulJson.members = Object.assign({}, ...memberJsonList);
 	}
 
 	client.close();
 
-	return res.send(successfulJson);
+	return res.json(successfulJson);
 }
