@@ -11,4 +11,4 @@ app.use(express.static('static'))
 app.use(middlewares.cors());
 app.use(router);
 
-app.listen(process.env.port || 8080);
+app.listen(process.env.PORT || 8080);

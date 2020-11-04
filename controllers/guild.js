@@ -73,6 +73,10 @@ export async function guild(req, res) {
 		}));
 		successfulJson.members = Object.assign({}, ...memberJsonList);
 	}
+	else {
+		failedJson.reason = 'HYPIXEL_GUILD_DNE';
+		return res.send(failedJson);
+	}
 
 	client.close();
 

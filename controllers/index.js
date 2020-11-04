@@ -11,10 +11,10 @@ export const router = express.Router();
 
 router.get('/', home);
 
-router.use('/cache/:slug', ratelimit(12));
+router.use('/cache/:slug', ratelimit(8));
 router.get('/cache/:slug', cache);
 
-router.use('/guild/:slug', ratelimit(12));
+router.use('/guild/:slug', ratelimit(8));
 router.get('/guild/:slug', guild);
 
 router.use('/player/:slug', ratelimit(12));
