@@ -8,6 +8,7 @@ export function filterPlayer(json) {
 	const player = json.player;
 	const filtered = {};
 	[
+		'achievements',
 		'achievementPoints',
 		'displayname',
 		'eulaCoins',
@@ -27,8 +28,12 @@ export function filterPlayer(json) {
 		'prefix',
 		'rank',
 		'rankPlusColor',
+		'rewardScore',
+		'rewardHighScore',
 		'socialMedia',
 		'stats',
+		'totalDailyRewards',
+		'totalRewards',
 		'tournamentTokens',
 		'tourney',
 		'userLanguage',

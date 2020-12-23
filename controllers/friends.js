@@ -66,7 +66,7 @@ export default async function(req, res) {
 		return res.send(failedJson);
 	}
 	successfulJson.status = (await statusResponse.json()).session;
-	successfulJson.friends = filters.filterFriends(await friendsResponse.json());
+	successfulJson.friends = (await friendsResponse.json()).records;
 	successfulJson.guild = (await guildResponse.json()).guild;
 	
 	// Add to the cache if the entry was not found previously

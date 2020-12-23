@@ -2,7 +2,7 @@ import { cacheClient } from '../utils/caches';
 import * as filters from '../utils/filters';
 import * as requests from '../utils/requests';
 
-export async function guild(req, res) {
+export default async function(req, res) {
 	const client = cacheClient('NAME');
 	const slug = req.params.slug;
 	let successfulJson = {success: true, slug};

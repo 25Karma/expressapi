@@ -1,6 +1,6 @@
 import { cacheClient } from '../utils/caches';
 
-export async function cache(req, res) {
+export default async function(req, res) {
 	const client = cacheClient('NAME');
 	const slug = req.params.slug;
 
