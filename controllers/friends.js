@@ -38,15 +38,24 @@ export default async function(req, res) {
 	const uuid = successfulJson.mojang.uuid;
 	const hypixelResponses = await Promise.all([
 		requests.getHypixelPlayer(uuid),
-		requests.getHypixelStatus(uuid),
 		requests.getHypixelFriends(uuid),
 		requests.getHypixelGuild(uuid),
 	]);
-	const [playerResponse, statusResponse, friendsResponse, guildResponse] = hypixelResponses;
+	const [playerResponse, friendsResponse, guildResponse] = hypixelResponses;
 	if (playerResponse.ok) {
 		const playerJson = await playerResponse.json();
 		if (playerJson.player !== null) {
 			successfulJson.player = filters.filterPlayer(playerJson);
+			// Update the value in the cache
+			const newCacheValue = Object.assign(
+				{},
+				successfulJson.mojang,
+				filters.filterName(successfulJson)
+			);
+			client.set(successfulJson.mojang.username, newCacheValue);
+			client.set(uuid, newCacheValue);
+
+			client.close();
 		}
 		else {
 			failedJson.reason = 'HYPIXEL_PLAYER_DNE';
@@ -65,23 +74,9 @@ export default async function(req, res) {
 		failedJson.reason = 'UNKNOWN';
 		return res.send(failedJson);
 	}
-	successfulJson.status = (await statusResponse.json()).session;
 	successfulJson.friends = (await friendsResponse.json()).records;
 	successfulJson.guild = (await guildResponse.json()).guild;
-	
-	// Add to the cache if the entry was not found previously
-	if (cachedValue === null) {
-		const newCacheValue = Object.assign(
-			{},
-			successfulJson.mojang,
-			filters.filterName(successfulJson)
-		);
-		client.set(successfulJson.mojang.username, newCacheValue);
-		client.set(uuid, newCacheValue);
-	}
 
-	client.close();
-	
 	// Send the data to the endpoint
 	return res.json(successfulJson)
 }

@@ -9,17 +9,16 @@ export default async function(req, res) {
 	let failedJson = {success: false, slug};
 	
 	// Get the slug from the cache
-	let mojang = null;
 	const cachedValue = await client.get(slug);
 	if (cachedValue !== null) {
-		mojang = cachedValue;
+		successfulJson.mojang = filters.filterMojang(cachedValue);
 	}
 
 	// If slug is not found in cache, call the Mojang API
 	else {
 		const mojangResponse = await requests.getMojang(slug);
 		if (mojangResponse.ok) {
-			mojang = await mojangResponse.json();
+			successfulJson.mojang = filters.filterMojang(await mojangResponse.json());
 		}
 		else if (mojangResponse.status === 400) {
 			failedJson.reason = 'MOJANG_CALL_FAILED';
@@ -35,45 +34,12 @@ export default async function(req, res) {
 		}
 	}
 
-	const guildResponse = await requests.getHypixelGuild(mojang.uuid);
+	const guildResponse = await requests.getHypixelGuild(successfulJson.mojang.uuid);
 	successfulJson.guild = (await guildResponse.json()).guild;
 	const rateLimitRemaining = guildResponse.headers.get('ratelimit-remaining');
 	const rateLimitBuffer = 30;
 
-	if (successfulJson.guild) {
-		let membersToFetch = Math.max(rateLimitRemaining - rateLimitBuffer, 0);
-		const memberList = successfulJson.guild.members;
-		const memberJsonList = await Promise.all(memberList.map(async n => {
-			const cachedValue = await client.get(n.uuid);
-			const uuid = n.uuid;
-			if (cachedValue !== null) {
-				return {[uuid]: cachedValue};
-			}
-			else if (membersToFetch > 0) {
-				membersToFetch--;
-				const mojangResponse = await requests.getMojang(uuid);
-				if (!mojangResponse.ok) {
-					return null;
-				}
-				const mojangJson = await mojangResponse.json();
-				const hypixelResponse = await requests.getHypixelPlayer(uuid);
-				if (!hypixelResponse.ok) {
-					return null;
-				}
-				const hypixelJson = await hypixelResponse.json();
-
-				const newCacheValue = {...filters.filterMojang(mojangJson), ...filters.filterName(hypixelJson)};
-				client.set(newCacheValue.username, newCacheValue);
-				client.set(newCacheValue.uuid, newCacheValue);
-				return {[uuid]: newCacheValue};
-			}
-			else {
-				return null;
-			}
-		}));
-		successfulJson.members = Object.assign({}, ...memberJsonList);
-	}
-	else {
+	if (!successfulJson.guild) {
 		failedJson.reason = 'HYPIXEL_GUILD_DNE';
 		return res.send(failedJson);
 	}

@@ -24,17 +24,33 @@ export default async function(req, res) {
 
 		// GET Hypixel
 		const uuid = mojangJson.uuid;
-		const hypixelResponse = await requests.getHypixelPlayer(uuid);
-		if (!hypixelResponse.ok) {
+		const playerResponse = await requests.getHypixelPlayer(uuid);
+		if (playerResponse.ok) {
+			const playerJson = await playerResponse.json();
+			if (playerJson.player === null) {
+				failedJson.reason = 'HYPIXEL_PLAYER_DNE';
+				return res.send(failedJson);
+			}
+			else {
+				// Add player to cache
+				const newCacheValue = {...filters.filterMojang(mojangJson), ...filters.filterName(playerJson)};
+				client.set(newCacheValue.username, newCacheValue);
+				client.set(newCacheValue.uuid, newCacheValue);
+				Object.assign(successfulJson, newCacheValue);
+			}
+		}
+		else if (playerResponse.status === 403) {
+			failedJson.reason = 'HYPIXEL_ACCESS_DENIED';
 			return res.send(failedJson);
 		}
-		const hypixelJson = await hypixelResponse.json();
-
-		// Add player to cache
-		const newCacheValue = {...filters.filterMojang(mojangJson), ...filters.filterName(hypixelJson)};
-		client.set(newCacheValue.username, newCacheValue);
-		client.set(newCacheValue.uuid, newCacheValue);
-		Object.assign(successfulJson, newCacheValue);
+		else if (playerResponse.status >= 500) {
+			failedJson.reason = 'HYPIXEL_API_DOWN';
+			return res.send(failedJson);
+		}
+		else {
+			failedJson.reason = 'UNKNOWN';
+			return res.send(failedJson);
+		}
 	}
 
 	client.close();

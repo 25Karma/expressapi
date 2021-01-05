@@ -22,7 +22,7 @@ export function cacheClient(name) {
 			client.set(
 				sanitizeID(key), 
 				Buffer.from(JSON.stringify(val)), 
-				{expires: 3*24*60*60});
+				{expires: 5*24*60*60});
 		},
 		close: () => {
 			client.close()

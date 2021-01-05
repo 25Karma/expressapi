@@ -29,7 +29,6 @@ Example: [/friends/Technoblade](https://karma-25.uc.r.appspot.com/friends/Techno
     "slug": "Technoblade",
     "mojang": { ... },
     "player": { ... },
-    "status": { ... },
     "friends": [ ... ],
     "guild": { ... }
 }
@@ -43,6 +42,7 @@ Example: [/guild/Technoblade](https://karma-25.uc.r.appspot.com/guild/Technoblad
 {
     "success": true,
     "slug": "Technoblade",
+    "mojang": { ... },
     "guild": { ... }
 }
 ```
