@@ -15,4 +15,5 @@ router.get('/friends/:slug',
 			]);
 		next();
 	},
+	middlewares.names,
 	middlewares.send);

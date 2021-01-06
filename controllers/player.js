@@ -14,7 +14,6 @@ router.get('/player/:slug',
 			middlewares.guild(req, res, () => {}),
 			middlewares.friends(req, res, () => {})
 			]);
-		res.locals.friends = res.locals.friends.length;
 		next();
 	},
 	middlewares.send);

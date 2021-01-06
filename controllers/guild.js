@@ -8,4 +8,5 @@ router.get('/guild/:slug',
 	middlewares.slug,
 	middlewares.mojang,
 	middlewares.guild,
+	middlewares.names,
 	middlewares.send);
