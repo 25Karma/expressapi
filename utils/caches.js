@@ -1,6 +1,6 @@
 import memjs from 'memjs';
 
-export function cacheClient(name) {
+export function memjsClient(name) {
 	const client = memjs.Client.create(
 		process.env[`${name}_CACHE_SERVERS`],
 		{
@@ -22,10 +22,10 @@ export function cacheClient(name) {
 			client.set(
 				sanitizeID(key), 
 				Buffer.from(JSON.stringify(val)), 
-				{expires: 5*24*60*60});
+				{expires: 30*24*60*60});
 		},
 		close: () => {
-			client.close()
+			client.close();
 		},
 	}
 }

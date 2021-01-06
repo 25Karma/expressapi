@@ -43,7 +43,7 @@ export function filterPlayer(json) {
 	let questsCompleted = 0;
 	const quests = player.quests;
 	if (quests !== undefined) {
-		for (const [k,v] of Object.entries(quests)) {
+		for (const [,v] of Object.entries(quests)) {
 			if (v.completions !== undefined) {
 				questsCompleted += v.completions.length;
 			}
@@ -66,14 +66,4 @@ export function filterName(json) {
 		'monthlyRankColor'
 	].map(n => {filtered[n] = player[n]});
 	return filtered;
-}
-
-export function filterFriends(json) {
-	const records = json.records;
-	if (json.success && records) {
-		return records.length;
-	}
-	else {
-		return records;
-	}
 }

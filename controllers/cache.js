@@ -1,7 +1,10 @@
-import { cacheClient } from '../utils/caches';
+import express from 'express';
+import { memjsClient } from '../utils/caches';
 
-export default async function(req, res) {
-	const client = cacheClient('NAME');
+export const router = express.Router();
+
+router.get('/cache/:slug', async (req, res) => {
+	const client = memjsClient('NAME');
 	const slug = req.params.slug;
 
 	const cachedValue = await client.get(slug);
@@ -9,4 +12,4 @@ export default async function(req, res) {
 	client.close();
 
 	return res.json(cachedValue);
-}
+});

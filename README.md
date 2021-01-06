@@ -54,13 +54,8 @@ Example: [/name/Technoblade](https://karma-25.uc.r.appspot.com/name/Technoblade)
 ```javascript
 {
     "success": true,
-    "slug": "technoblade",
-    "username": "Technoblade",
-    "uuid": "b876ec32-e396-476b-a115-8438d83c67d4",
-    "rank": "YOUTUBER",
-    "packageRank": "MVP_PLUS",
-    "prefix": "§d[PIG§b+++§d]",
-    "rankPlusColor": "DARK_PURPLE"
+    "slug": "Technoblade",
+    "name": { ... }
 }
 ```
 

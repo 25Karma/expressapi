@@ -1,6 +1,6 @@
 import expressCors from 'cors';
 
-export function cors(req, res, next) {
+export function cors() {
 	const options = {
 		origin: [
 			"https://25karma.xyz",

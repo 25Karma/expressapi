@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node -r esm -r dotenv/config app.js",
-    "dev": "nodemon -r esm -r dotenv/config app.js"
+    "dev": "nodemon --exec \"npm run lint && npm start\"",
+    "lint": "eslint **/*.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "eslint": "^7.17.0",
+    "eslint-plugin-only-warn": "^1.0.2",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-rate-limit": "^5.1.3",
