@@ -22,7 +22,7 @@ export function memjsClient(name) {
 			client.set(
 				sanitizeID(key), 
 				Buffer.from(JSON.stringify(val)), 
-				{expires: 30*24*60*60});
+				{expires: 20*24*60*60});
 		},
 		close: () => {
 			client.close();
