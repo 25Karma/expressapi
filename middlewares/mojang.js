@@ -11,17 +11,19 @@ export async function mojang(req, res, next) {
 	if (cachedValue !== null) {
 		res.locals.mojang = filterMojang(cachedValue);
 	}
-
+	
 	// If slug is not found in cache, call the Mojang API
 	else {
 		const mojangResponse = await getMojang(slug);
 		if (mojangResponse.ok) {
-			res.locals.mojang = filterMojang(await mojangResponse.json());
+			const mojangJson = await mojangResponse.json();
+			res.locals.mojang = filterMojang(mojangJson);
 		}
 		else if (mojangResponse.status === 400) {
 			return res.send({success: false, slug, reason: 'MOJANG_CALL_FAILED'});
 		}
 		else if (mojangResponse.status === 404) {
+			console.log('404');
 			return res.send({success: false, slug, reason: 'MOJANG_PLAYER_DNE'});
 		}	
 		else {
