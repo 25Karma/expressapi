@@ -7,5 +7,11 @@ router.get('/achievements/:slug',
 	middlewares.ratelimit(12),
 	middlewares.slug,
 	middlewares.mojang,
-	middlewares.player,
+	async (req, res, next) => {
+		await Promise.all([
+			middlewares.player(req, res, () => {}),
+			middlewares.resources(req, res, () => {})
+			]);
+		next();
+	},
 	middlewares.send);

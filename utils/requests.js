@@ -18,3 +18,6 @@ export function getHypixelFriends(uuid) {
 export function getHypixelGuild(uuid) {
 	return fetch(`https://api.hypixel.net/guild?key=${key}&player=${uuid}`);
 }
+export function getHypixelResource(endpoint) {
+	return fetch(`https://api.hypixel.net/resources/${endpoint}`);
+}
