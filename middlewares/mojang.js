@@ -19,14 +19,10 @@ export async function mojang(req, res, next) {
 			const mojangJson = await mojangResponse.json();
 			res.locals.mojang = filterMojang(mojangJson);
 		}
-		else {
-			switch (mojangResponse.status) {
-				case (400): return res.send({success: false, slug, reason: 'MOJANG_CALL_FAILED'});
-				case (404): return res.send({success: false, slug, reason: 'MOJANG_PLAYER_DNE'});
-				case (429): return res.send({success: false, slug, reason: 'MOJANG_RATELIMITED'});
-				default:    return res.send({success: false, slug, reason: 'UNKNOWN'});
-			}
-		}
+		else if (mojangResponse.status === 400) return res.send({success: false, slug, reason: 'MOJANG_CALL_FAILED'});
+		else if (mojangResponse.status === 404) return res.send({success: false, slug, reason: 'MOJANG_PLAYER_DNE'});
+		else if (mojangResponse.status === 429) return res.send({success: false, slug, reason: 'MOJANG_RATELIMITED'});
+		else                                    return res.send({success: false, slug, reason: 'UNKNOWN'});
 	}
 
 	next();

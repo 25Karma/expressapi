@@ -10,7 +10,6 @@ router.get('/friends/:slug',
 	async (req, res, next) => {
 		await Promise.all([
 			middlewares.player(req, res, () => {}),
-			middlewares.guild(req, res, () => {}),
 			middlewares.friends(req, res, () => {})
 			]);
 		next();

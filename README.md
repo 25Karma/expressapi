@@ -2,10 +2,23 @@
 An Express REST API for [25Karma](https://25karma.github.io).
 
 ## Endpoints
-The root url of the API is [https://karma-25.uc.r.appspot.com](https://karma-25.uc.r.appspot.com/). `slug` can be the player's username or UUID.
+The root url of the API is currently [https://karma-25.uc.r.appspot.com](https://karma-25.uc.r.appspot.com/). `slug` can be the player's username or UUID.
+
+### /achievements/`slug`
+Get the information about a player's achievements.
+
+Example: [/achievements/Technoblade](https://karma-25.uc.r.appspot.com/achievements/Technoblade)
+```javascript
+{
+    "success": true,
+    "slug": "Technoblade",
+    "mojang": { ... },
+    "player": { ... }
+}
+```
 
 ### /cache/`slug`
-Returns the value of the key if it exists in the cache.
+Returns the value of the key if it exists in the cache. Returns null if it does not.
 
 Example: [/cache/Technoblade](https://karma-25.uc.r.appspot.com/cache/Technoblade)
 ```javascript
@@ -20,7 +33,7 @@ Example: [/cache/Technoblade](https://karma-25.uc.r.appspot.com/cache/Technoblad
 ```
 
 ### /friends/`slug`
-Similar to `/player` endpoint, but with a full list of friends.
+Get the information about a player's friends.
 
 Example: [/friends/Technoblade](https://karma-25.uc.r.appspot.com/friends/Technoblade)
 ```javascript
@@ -30,7 +43,6 @@ Example: [/friends/Technoblade](https://karma-25.uc.r.appspot.com/friends/Techno
     "mojang": { ... },
     "player": { ... },
     "friends": [ ... ],
-    "guild": { ... },
     "names": { ... }
 }
 ```
@@ -62,7 +74,7 @@ Example: [/name/Technoblade](https://karma-25.uc.r.appspot.com/name/Technoblade)
 ```
 
 ### /player/`slug`
-All the information about a player.
+Get all the information about a player.
 
 Example: [/player/Technoblade](https://karma-25.uc.r.appspot.com/player/Technoblade)
 ```javascript
@@ -74,5 +86,31 @@ Example: [/player/Technoblade](https://karma-25.uc.r.appspot.com/player/Technobl
     "status": { ... },
     "friends": 88,
     "guild": { ... }
+}
+```
+
+### /pets/`slug`
+Get the information about a player's pets.
+
+Example: [/pets/Technoblade](https://karma-25.uc.r.appspot.com/pets/Technoblade)
+```javascript
+{
+    "success": true,
+    "slug": "Technoblade",
+    "mojang": { ... },
+    "player": { ... }
+}
+```
+
+### /quests/`slug`
+Get the information about a player's quests.
+
+Example: [/quests/Technoblade](https://karma-25.uc.r.appspot.com/quests/Technoblade)
+```javascript
+{
+    "success": true,
+    "slug": "Technoblade",
+    "mojang": { ... },
+    "player": { ... }
 }
 ```

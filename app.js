@@ -7,15 +7,12 @@ const app = express();
 app.set('view engine', 'jade');
 app.set('json spaces', 2);
 
-app.use(express.static('static'))
+app.use(express.static('static'));
 app.use(middlewares.cors());
 
 // Endpoints
-app.use(controllers.cache);
-app.use(controllers.friends);
-app.use(controllers.guild);
-app.use(controllers.home);
-app.use(controllers.name);
-app.use(controllers.player);
+for (const controller of Object.values(controllers)) {
+	app.use(controller);
+}
 
 app.listen(process.env.PORT || 8080);

@@ -1,5 +1,5 @@
 import { memjsClient } from '../utils/caches';
-import { filterName, filterPlayer } from '../utils/filters';
+import * as filters from '../utils/filters';
 import { getHypixelPlayer } from '../utils/requests';
 
 export async function player(req, res, next) {
@@ -10,12 +10,18 @@ export async function player(req, res, next) {
 	if (response.ok) {
 		const json = await response.json();
 		if (json.player !== null) {
-			res.locals.player = filterPlayer(json);
+
+			// Filter for different data in the player json depending on the request route
+			if      (req.route.path === '/achievements/:slug') res.locals.player = filters.filterPlayerForAchievements(json);
+			else if (req.route.path === '/friends/:slug')      res.locals.player = filters.filterPlayerForFriends(json);
+			else if (req.route.path === '/pets/:slug')         res.locals.player = filters.filterPlayerForPets(json);
+			else if (req.route.path === '/player/:slug')       res.locals.player = filters.filterPlayerForPlayer(json);
+			else if (req.route.path === '/quests/:slug')       res.locals.player = filters.filterPlayerForQuests(json);
 
 			const newCacheValue = Object.assign(
 				{},
 				res.locals.mojang,
-				filterName(json)
+				filters.filterName(json)
 			);
 
 			// Update the value in the cache
@@ -28,15 +34,10 @@ export async function player(req, res, next) {
 			return res.send({success: false, slug, reason: 'HYPIXEL_PLAYER_DNE'});
 		}
 	}
-	else if (response.status === 403) {
-		return res.send({success: false, slug, reason: 'HYPIXEL_ACCESS_DENIED'});
-	}
-	else if (response.status >= 500) {
-		return res.send({success: false, slug, reason: 'HYPIXEL_API_DOWN'});
-	}
-	else {
-		return res.send({success: false, slug, reason: 'UNKNOWN'});
-	}
+	else if (response.status === 403) return res.send({success: false, slug, reason: 'HYPIXEL_ACCESS_DENIED'});
+	else if (response.status === 429) return res.send({success: false, slug, reason: 'HYPIXEL_THROTTLED'});
+	else if (response.status >=  500) return res.send({success: false, slug, reason: 'HYPIXEL_DOWN'});
+	else                              return res.send({success: false, slug, reason: 'UNKNOWN'});
 	
 	next();
 }

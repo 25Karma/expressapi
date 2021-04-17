@@ -4,30 +4,75 @@ export function filterMojang(json) {
 	return filtered;
 }
 
-export function filterPlayer(json) {
+export function filterPlayerForAchievements(json) {
+	const filtered = {};
+	[
+		'achievements',
+		'achievementsOneTime',
+		'achievementPoints',
+		'karma',
+		'networkExp',
+
+		'monthlyPackageRank',
+		'monthlyRankColor',
+		'newPackageRank',
+		'packageRank',
+		'prefix',
+		'rank',
+		'rankPlusColor',
+	].forEach(n => {filtered[n] = json.player[n]});
+	return filtered;
+}
+
+export function filterPlayerForFriends(json) {
+	const filtered = {};
+	[
+		'karma',
+		'networkExp',
+
+		'monthlyPackageRank',
+		'monthlyRankColor',
+		'newPackageRank',
+		'packageRank',
+		'prefix',
+		'rank',
+		'rankPlusColor',
+	].forEach(n => {filtered[n] = json.player[n]});
+	return filtered;
+}
+
+export function filterPlayerForPets(json) {
+	const filtered = {};
+	[
+		'petConsumables',
+		'petStats',
+		'karma',
+		'networkExp',
+
+		'monthlyPackageRank',
+		'monthlyRankColor',
+		'newPackageRank',
+		'packageRank',
+		'prefix',
+		'rank',
+		'rankPlusColor',
+	].forEach(n => {filtered[n] = json.player[n]});
+	return filtered;
+}
+
+export function filterPlayerForPlayer(json) {
 	const player = json.player;
 	const filtered = {};
 	[
 		'achievements',
 		'achievementPoints',
-		'displayname',
 		'eulaCoins',
 		'firstLogin',
 		'karma',
 		'knownAliases',
 		'lastLogin',
 		'lastLogout',
-		'monthlyPackageRank',
-		'monthlyRankColor',
 		'networkExp',
-		'newPackageRank',
-		'packageRank',
-		'petConsumables',
-		'petStats',
-		'playername',
-		'prefix',
-		'rank',
-		'rankPlusColor',
 		'rewardScore',
 		'rewardHighScore',
 		'socialMedia',
@@ -37,7 +82,14 @@ export function filterPlayer(json) {
 		'tournamentTokens',
 		'tourney',
 		'userLanguage',
-		'uuid',
+
+		'monthlyPackageRank',
+		'monthlyRankColor',
+		'newPackageRank',
+		'packageRank',
+		'prefix',
+		'rank',
+		'rankPlusColor',
 	].forEach(n => {filtered[n] = player[n]});
 
 	let questsCompleted = 0;
@@ -50,6 +102,24 @@ export function filterPlayer(json) {
 		}
 	}
 	filtered.questsCompleted = questsCompleted;
+	return filtered;
+}
+
+export function filterPlayerForQuests(json) {
+	const filtered = {};
+	[
+		'quests',
+		'karma',
+		'networkExp',
+
+		'monthlyPackageRank',
+		'monthlyRankColor',
+		'newPackageRank',
+		'packageRank',
+		'prefix',
+		'rank',
+		'rankPlusColor',
+	].forEach(n => {filtered[n] = json.player[n]});
 	return filtered;
 }
 
