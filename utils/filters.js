@@ -44,7 +44,9 @@ export function filterPlayerForFriends(json) {
 export function filterPlayerForPets(json) {
 	const filtered = {};
 	[
+		'currentPet',
 		'petConsumables',
+		'petJourneyTimestamp',
 		'petStats',
 		'karma',
 		'networkExp',
@@ -66,6 +68,7 @@ export function filterPlayerForPlayer(json) {
 	[
 		'achievements',
 		'achievementPoints',
+		'eugene',
 		'eulaCoins',
 		'firstLogin',
 		'karma',
