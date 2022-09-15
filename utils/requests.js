@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 const key = process.env.HYPIXEL_SECRET_KEY
 
 export function getMojang(slug) {
-	return fetch(`https://api.ashcon.app/mojang/v1/user/${slug}`);
+	return fetch(`https://api.ashcon.app/mojang/v2/user/${slug}`);
 }
 
 export function getHypixelPlayer(uuid) {
