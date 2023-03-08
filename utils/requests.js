@@ -12,9 +12,6 @@ export function getHypixelPlayer(uuid) {
 export function getHypixelStatus(uuid) {
 	return fetch(`https://api.hypixel.net/status?key=${key}&uuid=${uuid}`);
 }
-export function getHypixelFriends(uuid) {
-	return fetch(`https://api.hypixel.net/friends?key=${key}&uuid=${uuid}`);
-}
 export function getHypixelGuild(uuid) {
 	return fetch(`https://api.hypixel.net/guild?key=${key}&player=${uuid}`);
 }

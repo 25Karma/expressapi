@@ -1,5 +1,4 @@
 export * from './cors'
-export * from './friends'
 export * from './guild'
 export * from './mojang'
 export * from './name'

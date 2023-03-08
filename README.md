@@ -32,21 +32,6 @@ Example: [/cache/Technoblade](https://karma-25.uc.r.appspot.com/cache/Technoblad
 }
 ```
 
-### /friends/`slug`
-Get the information about a player's friends.
-
-Example: [/friends/Technoblade](https://karma-25.uc.r.appspot.com/friends/Technoblade)
-```javascript
-{
-    "success": true,
-    "slug": "Technoblade",
-    "mojang": { ... },
-    "player": { ... },
-    "friends": [ ... ],
-    "names": { ... }
-}
-```
-
 ### /guild/`slug`
 Get the information about a player's guild.
 
@@ -84,7 +69,6 @@ Example: [/player/Technoblade](https://karma-25.uc.r.appspot.com/player/Technobl
     "mojang": { ... },
     "player": { ... },
     "status": { ... },
-    "friends": 88,
     "guild": { ... }
 }
 ```

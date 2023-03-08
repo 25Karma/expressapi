@@ -11,8 +11,7 @@ router.get('/player/:slug',
 		await Promise.all([
 			middlewares.player(req, res, () => {}),
 			middlewares.status(req, res, () => {}),
-			middlewares.guild(req, res, () => {}),
-			middlewares.friends(req, res, () => {})
+			middlewares.guild(req, res, () => {})
 			]);
 		next();
 	},
