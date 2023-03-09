@@ -5,8 +5,8 @@ export async function mojang(req, res, next) {
 	const slug = res.locals.slug;
 	
 	// Get the value from the cache
-	const mc = memjsClient('NAME');
-	const cachedValue = await mc.get(slug);
+	const mc = memjsClient(slug);
+	const cachedValue = await mc.get();
 	mc.close();
 	if (cachedValue !== null) {
 		res.locals.mojang = filterMojang(cachedValue);
@@ -24,7 +24,6 @@ export async function mojang(req, res, next) {
 		else if (mojangResponse.status === 429) return res.send({success: false, slug, reason: 'MOJANG_RATELIMITED'});
 		else                                    return res.send({success: false, slug, reason: 'UNKNOWN'});
 	}
-
 	next();
 }
 

@@ -1,16 +1,18 @@
 import memjs from 'memjs';
 
-export function memjsClient(name) {
+export function memjsClient(key) {
+	const sanitizedKey = sanitizeString(key);
+	const cachePrefix = sanitizedKey.charAt(0).toUpperCase();
 	const client = memjs.Client.create(
-		process.env[`${name}_CACHE_SERVERS`],
+		process.env[`${cachePrefix}_CACHE_SERVERS`],
 		{
-			username: process.env[`${name}_CACHE_USERNAME`],
-			password: process.env[`${name}_CACHE_PASSWORD`],
+			username: process.env[`${cachePrefix}_CACHE_USERNAME`],
+			password: process.env[`${cachePrefix}_CACHE_PASSWORD`],
 		}
 	);
 	return {
-		get: async (key) => {
-			const value = (await client.get(sanitizeID(key))).value;
+		get: async () => {
+			const value = (await client.get(sanitizedKey)).value;
 			if (value === null) {
 				return null
 			}
@@ -18,11 +20,11 @@ export function memjsClient(name) {
 				return JSON.parse(value.toString());
 			}
 		},
-		set: async (key, val) => {
+		set: async (val) => {
 			client.set(
-				sanitizeID(key), 
+				sanitizedKey, 
 				Buffer.from(JSON.stringify(val)), 
-				{expires: 20*24*60*60});
+				{expires: 30*24*60*60}); // If this changes, update the Tip.js file in 25Karma
 		},
 		close: () => {
 			client.close();
@@ -30,6 +32,6 @@ export function memjsClient(name) {
 	}
 }
 
-function sanitizeID(id) {
+function sanitizeString(id) {
 	return id.split('-').join('').toLowerCase();
 }

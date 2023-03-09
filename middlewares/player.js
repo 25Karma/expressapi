@@ -13,7 +13,6 @@ export async function player(req, res, next) {
 
 			// Filter for different data in the player json depending on the request route
 			if      (req.route.path === '/achievements/:slug') res.locals.player = filters.filterPlayerForAchievements(json);
-			else if (req.route.path === '/friends/:slug')      res.locals.player = filters.filterPlayerForFriends(json);
 			else if (req.route.path === '/pets/:slug')         res.locals.player = filters.filterPlayerForPets(json);
 			else if (req.route.path === '/player/:slug')       res.locals.player = filters.filterPlayerForPlayer(json);
 			else if (req.route.path === '/quests/:slug')       res.locals.player = filters.filterPlayerForQuests(json);
@@ -25,9 +24,11 @@ export async function player(req, res, next) {
 			);
 
 			// Update the value in the cache
-			const mc = memjsClient('NAME');
-			mc.set(res.locals.mojang.username, newCacheValue);
-			mc.set(uuid, newCacheValue);
+			let mc = memjsClient(res.locals.mojang.username);
+			mc.set(newCacheValue);
+			mc.close();
+			mc = memjsClient(uuid);
+			mc.set(newCacheValue);
 			mc.close();
 		}
 		else {

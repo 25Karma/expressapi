@@ -24,23 +24,6 @@ export function filterPlayerForAchievements(json) {
 	return filtered;
 }
 
-export function filterPlayerForFriends(json) {
-	const filtered = {};
-	[
-		'karma',
-		'networkExp',
-
-		'monthlyPackageRank',
-		'monthlyRankColor',
-		'newPackageRank',
-		'packageRank',
-		'prefix',
-		'rank',
-		'rankPlusColor',
-	].forEach(n => {filtered[n] = json.player[n]});
-	return filtered;
-}
-
 export function filterPlayerForPets(json) {
 	const filtered = {};
 	[

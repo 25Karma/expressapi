@@ -6,8 +6,8 @@ export async function name(req, res, next) {
 	const slug = res.locals.slug;
 
 	// Check cache
-	let mc = memjsClient('NAME');
-	const cachedValue = await mc.get(slug);
+	let mc = memjsClient(slug);
+	const cachedValue = await mc.get();
 	mc.close();
 	if (cachedValue !== null) {
 		res.locals.name = cachedValue;
@@ -34,9 +34,11 @@ export async function name(req, res, next) {
 
 		// Add player to cache
 		const newCacheValue = {...filterMojang(mojangJson), ...filterName(playerJson)};
-		mc = memjsClient('NAME');
-		mc.set(newCacheValue.username, newCacheValue);
-		mc.set(newCacheValue.uuid, newCacheValue);
+		mc = memjsClient(newCacheValue.username);
+		mc.set(newCacheValue);
+		mc.close();
+		mc = memjsClient(newCacheValue.uuid);
+		mc.set(newCacheValue);
 		mc.close();
 		res.locals.name = newCacheValue;
 	}

@@ -4,12 +4,12 @@ import { memjsClient } from '../utils/caches';
 export const router = express.Router();
 
 router.get('/cache/:slug', async (req, res) => {
-	const client = memjsClient('NAME');
 	const slug = req.params.slug;
+	const mc = memjsClient(slug);
 
-	const cachedValue = await client.get(slug);
+	const cachedValue = await mc.get();
 
-	client.close();
+	mc.close();
 
 	return res.json(cachedValue);
 });
