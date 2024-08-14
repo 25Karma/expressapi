@@ -6,6 +6,7 @@ import * as middlewares from './middlewares';
 const app = express();
 app.set('view engine', 'jade');
 app.set('json spaces', 2);
+app.set('trust proxy', true);
 
 app.use(express.static('static'));
 app.use(middlewares.cors());
