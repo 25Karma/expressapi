@@ -7,7 +7,7 @@
     "start": "node -r esm -r dotenv/config app.js",
     "dev": "nodemon --exec \"npm run lint && npm start\"",
     "lint": "eslint **/*.js",
-    "deploy": "gcloud config set project karma-25 && gcloud app deploy"
+    "deploy": "gcloud config set project karma-25 && gcloud app deploy --no-cache"
   },
   "repository": {
     "type": "git",
