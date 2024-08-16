@@ -1,12 +1,17 @@
 import expressCors from 'cors';
 
+const whitelist = [];
+
 export function cors() {
 	const options = {
-		origin: [
-			"https://25karma.xyz",
-			"http://25karma.xyz",
-			"http://localhost:3000",
-		],
+		origin: whitelist,
 	};
 	return expressCors(options);
+}
+
+export function headers() {
+	return function (req, res, next) {
+		// Implement headers based authentication
+		next();
+	}
 }

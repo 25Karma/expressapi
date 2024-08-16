@@ -4,7 +4,7 @@ import * as middlewares from '../middlewares';
 export const router = express.Router();
 
 router.get('/player/:slug', 
-	middlewares.ratelimit(12),
+	middlewares.ratelimit(8),
 	middlewares.slug,
 	middlewares.mojang,
 	async (req, res, next) => {

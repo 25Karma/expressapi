@@ -9,7 +9,7 @@ app.set('json spaces', 2);
 app.set('trust proxy', true);
 
 app.use(express.static('static'));
-app.use(middlewares.cors());
+app.use(middlewares.cors(), middlewares.headers());
 
 // Endpoints
 for (const controller of Object.values(controllers)) {
