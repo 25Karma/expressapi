@@ -1,4 +1,4 @@
-# 25Karma API
+# 25Karma API `deploy` branch
 An Express REST API for [25Karma](https://25karma.github.io).
 
 ## Endpoints
