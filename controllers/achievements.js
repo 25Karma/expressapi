@@ -4,7 +4,7 @@ import * as middlewares from '../middlewares';
 export const router = express.Router();
 
 router.get('/achievements/:slug', 
-	middlewares.ratelimit(8),
+	middlewares.ratelimit(10),
 	middlewares.slug,
 	middlewares.mojang,
 	async (req, res, next) => {
