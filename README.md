@@ -1,13 +1,13 @@
 # 25Karma API
-An Express REST API for [25Karma](https://25karma.github.io).
+An Express REST API for [25Karma](https://github.com/25Karma/25Karma).
 
 ## Endpoints
-The root url of the API is currently [https://karma-25.uc.r.appspot.com](https://karma-25.uc.r.appspot.com/). `slug` can be the player's username or UUID.
+`slug` can be the player's username or UUID.
 
 ### /achievements/`slug`
 Get the information about a player's achievements.
 
-Example: [/achievements/Technoblade](https://karma-25.uc.r.appspot.com/achievements/Technoblade)
+Example: [/achievements/Technoblade]()
 ```javascript
 {
     "success": true,
@@ -20,7 +20,7 @@ Example: [/achievements/Technoblade](https://karma-25.uc.r.appspot.com/achieveme
 ### /cache/`slug`
 Returns the value of the key if it exists in the cache. Returns null if it does not.
 
-Example: [/cache/Technoblade](https://karma-25.uc.r.appspot.com/cache/Technoblade)
+Example: [/cache/Technoblade]()
 ```javascript
 {
     "username": "Technoblade",
@@ -35,7 +35,7 @@ Example: [/cache/Technoblade](https://karma-25.uc.r.appspot.com/cache/Technoblad
 ### /guild/`slug`
 Get the information about a player's guild.
 
-Example: [/guild/Technoblade](https://karma-25.uc.r.appspot.com/guild/Technoblade)
+Example: [/guild/Technoblade]()
 ```javascript
 {
     "success": true,
@@ -49,7 +49,7 @@ Example: [/guild/Technoblade](https://karma-25.uc.r.appspot.com/guild/Technoblad
 ### /name/`slug`
 The name and rank information about a player.
 
-Example: [/name/Technoblade](https://karma-25.uc.r.appspot.com/name/Technoblade)
+Example: [/name/Technoblade]()
 ```javascript
 {
     "success": true,
@@ -61,7 +61,7 @@ Example: [/name/Technoblade](https://karma-25.uc.r.appspot.com/name/Technoblade)
 ### /player/`slug`
 Get all the information about a player.
 
-Example: [/player/Technoblade](https://karma-25.uc.r.appspot.com/player/Technoblade)
+Example: [/player/Technoblade]()
 ```javascript
 {
     "success": true,
@@ -76,7 +76,7 @@ Example: [/player/Technoblade](https://karma-25.uc.r.appspot.com/player/Technobl
 ### /pets/`slug`
 Get the information about a player's pets.
 
-Example: [/pets/Technoblade](https://karma-25.uc.r.appspot.com/pets/Technoblade)
+Example: [/pets/Technoblade]()
 ```javascript
 {
     "success": true,
@@ -89,7 +89,7 @@ Example: [/pets/Technoblade](https://karma-25.uc.r.appspot.com/pets/Technoblade)
 ### /quests/`slug`
 Get the information about a player's quests.
 
-Example: [/quests/Technoblade](https://karma-25.uc.r.appspot.com/quests/Technoblade)
+Example: [/quests/Technoblade]()
 ```javascript
 {
     "success": true,
