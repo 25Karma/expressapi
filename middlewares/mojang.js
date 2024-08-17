@@ -1,4 +1,5 @@
 import { memjsClient } from '../utils/caches';
+import { filterMojang } from '../utils/filters';
 import { getMojang } from '../utils/requests';
 
 export async function mojang(req, res, next) {
@@ -14,21 +15,14 @@ export async function mojang(req, res, next) {
 	
 	// If slug is not found in cache, call the Mojang API
 	else {
-		const mojangResponse = await getMojang(slug);
-		if (mojangResponse.ok) {
-			const mojangJson = await mojangResponse.json();
-			res.locals.mojang = filterMojang(mojangJson);
+		const json = await getMojang(slug);
+		if (json.response === 200) {
+			res.locals.mojang = filterMojang(json);
 		}
-		else if (mojangResponse.status === 400) return res.send({success: false, slug, reason: 'MOJANG_CALL_FAILED'});
-		else if (mojangResponse.status === 404) return res.send({success: false, slug, reason: 'MOJANG_PLAYER_DNE'});
-		else if (mojangResponse.status === 429) return res.send({success: false, slug, reason: 'MOJANG_RATELIMITED'});
+		else if (json.response === 404) return res.send({success: false, slug, reason: 'MOJANG_CALL_FAILED'});
+		else if (json.response === 400) return res.send({success: false, slug, reason: 'MOJANG_PLAYER_DNE'});
+		else if (json.response === 429) return res.send({success: false, slug, reason: 'MOJANG_RATELIMITED'});
 		else                                    return res.send({success: false, slug, reason: 'UNKNOWN'});
 	}
 	next();
-}
-
-function filterMojang(json) {
-	const filtered = {};
-	['username', 'uuid'].forEach(n => {filtered[n] = json[n]});
-	return filtered;
 }

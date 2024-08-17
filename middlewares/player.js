@@ -6,9 +6,8 @@ export async function player(req, res, next) {
 	// Call the Hypixel API
 	const slug = res.locals.slug;
 	const uuid = res.locals.mojang.uuid;
-	const response = await getHypixelPlayer(uuid);
-	if (response.ok) {
-		const json = await response.json();
+	const json = await getHypixelPlayer(uuid);
+	if (json.response === 200) {
 		if (json.player !== null) {
 
 			// Filter for different data in the player json depending on the request route
@@ -35,9 +34,9 @@ export async function player(req, res, next) {
 			return res.send({success: false, slug, reason: 'HYPIXEL_PLAYER_DNE'});
 		}
 	}
-	else if (response.status === 403) return res.send({success: false, slug, reason: 'HYPIXEL_ACCESS_DENIED'});
-	else if (response.status === 429) return res.send({success: false, slug, reason: 'HYPIXEL_THROTTLED'});
-	else if (response.status >=  500) return res.send({success: false, slug, reason: 'HYPIXEL_DOWN'});
+	else if (json.response === 403) return res.send({success: false, slug, reason: 'HYPIXEL_ACCESS_DENIED'});
+	else if (json.response === 429) return res.send({success: false, slug, reason: 'HYPIXEL_THROTTLED'});
+	else if (json.response >=  500) return res.send({success: false, slug, reason: 'HYPIXEL_DOWN'});
 	else                              return res.send({success: false, slug, reason: 'UNKNOWN'});
 	
 	next();

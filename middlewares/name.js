@@ -15,19 +15,17 @@ export async function name(req, res, next) {
 	// If not in cache
 	else {
 		// GET Mojang
-		const mojangResponse = await getMojang(slug);
-		if (!mojangResponse.ok) {
+		const mojangJson = await getMojang(slug);
+		if (mojangJson.response !== 200) {
 			return res.send({success: false});
 		}
-		const mojangJson = await mojangResponse.json();
 
 		// GET Hypixel
 		const uuid = mojangJson.uuid;
-		const playerResponse = await getHypixelPlayer(uuid);
-		if (!playerResponse.ok) {
+		const playerJson = await getHypixelPlayer(uuid);
+		if (playerJson.response !== 200) {
 			return res.send({success: false});
 		}
-		const playerJson = await playerResponse.json();
 		if (playerJson.player === null) {
 			return res.send({success: false});
 		}

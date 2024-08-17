@@ -1,16 +1,12 @@
 import { getHypixelResource } from '../utils/requests';
 
 export async function resources(req, res, next) {
-	let response = null;
-	if (req.route.path === '/achievements/:slug') response = await getHypixelResource('achievements');
-	else if (req.route.path === '/quests/:slug')  response = await getHypixelResource('quests');
+	let json = null;
+	if (req.route.path === '/achievements/:slug') json = await getHypixelResource('achievements');
+	else if (req.route.path === '/quests/:slug')  json = await getHypixelResource('quests');
 
-	if (response.ok) {
-		const json = await response.json();
+	if (json.response === 200) {
 		res.locals.resources = json;
-	}
-	else {
-		console.log(response)
 	}
 
 	next();
