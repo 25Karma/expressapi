@@ -54,6 +54,7 @@ export function filterPlayerForPlayer(json) {
 		'eugene',
 		'eulaCoins',
 		'firstLogin',
+		'giftingMeta',
 		'karma',
 		'knownAliases',
 		'lastLogin',
