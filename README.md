@@ -1,6 +1,10 @@
 # 25Karma API
 An Express REST API for [25Karma](https://github.com/25Karma/25Karma).
 
+## Installation
+
+Follow the installation instructions located [here](https://github.com/25Karma/25Karma/blob/master/README.md#installation).
+
 ## Endpoints
 `slug` can be the player's username or UUID.
 
