@@ -1,6 +1,7 @@
 import expressCors from 'cors';
 
-const whitelist = process.env.FRONTEND_URLS.split(' ')
+const SEPARATOR = ' ';
+const whitelist = process.env.WHITELISTED_URLS;
 
 export function cors() {
 	const options = {
