@@ -4,7 +4,7 @@ const whitelist = [];
 
 export function cors() {
 	const options = {
-		origin: whitelist,
+		origin: whitelist.length ? whitelist : '*',
 	};
 	return expressCors(options);
 }
