@@ -5,7 +5,7 @@ const whitelist = process.env.WHITELISTED_URLS;
 
 export function cors() {
 	const options = {
-		origin: whitelist,
+		origin: whitelist !== undefined ? whitelist.split(SEPARATOR) : '*',
 	};
 	return expressCors(options);
 }
