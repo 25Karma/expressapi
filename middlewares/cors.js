@@ -1,11 +1,11 @@
 import expressCors from 'cors';
 
 const SEPARATOR = ' ';
-const whitelist = process.env.WHITELISTED_URLS;
+const whitelist = process.env.WHITELISTED_URLS || '';
 
 export function cors() {
 	const options = {
-		origin: whitelist !== undefined ? whitelist.split(SEPARATOR) : '*',
+		origin: whitelist !== '' ? whitelist.split(SEPARATOR) : '*',
 	};
 	return expressCors(options);
 }
