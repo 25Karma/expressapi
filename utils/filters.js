@@ -51,6 +51,7 @@ export function filterPlayerForPlayer(json) {
 	[
 		'achievements',
 		'achievementPoints',
+		'challenges',
 		'eugene',
 		'eulaCoins',
 		'firstLogin',
