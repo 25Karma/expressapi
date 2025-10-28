@@ -1,6 +1,7 @@
 import { memjsClient } from '../utils/caches';
 import * as filters from '../utils/filters';
 import { getHypixelPlayer } from '../utils/requests';
+import { sendHypixelError } from '../utils/errors';
 
 export async function player(req, res, next) {
 	// Call the Hypixel API
@@ -34,10 +35,7 @@ export async function player(req, res, next) {
 			return res.send({success: false, slug, reason: 'HYPIXEL_PLAYER_DNE'});
 		}
 	}
-	else if (json.response === 403) return res.send({success: false, slug, reason: 'HYPIXEL_ACCESS_DENIED'});
-	else if (json.response === 429) return res.send({success: false, slug, reason: 'HYPIXEL_THROTTLED'});
-	else if (json.response >=  500) return res.send({success: false, slug, reason: 'HYPIXEL_DOWN'});
-	else                              return res.send({success: false, slug, reason: 'UNKNOWN'});
+	else return sendHypixelError(res, slug, json.response);
 	
 	next();
 }
