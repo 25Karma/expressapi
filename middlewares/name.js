@@ -1,6 +1,6 @@
-import { memjsClient } from '../utils/caches';
-import { getHypixelPlayer, getMojang } from '../utils/requests';
-import { filterMojang, filterName } from '../utils/filters';
+import { memjsClient } from '../utils/caches.js';
+import { getHypixelPlayer, getMojang } from '../utils/requests.js';
+import { filterMojang, filterName } from '../utils/filters.js';
 
 export async function name(req, res, next) {
 	const slug = res.locals.slug;

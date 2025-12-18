@@ -1,5 +1,5 @@
 import express from 'express';
-import { memjsClient } from '../utils/caches';
+import { memjsClient } from '../utils/caches.js';
 
 export const router = express.Router();
 

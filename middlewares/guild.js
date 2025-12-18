@@ -1,5 +1,5 @@
-import { getHypixelGuild } from '../utils/requests';
-import { sendHypixelError } from '../utils/errors';
+import { getHypixelGuild } from '../utils/requests.js';
+import { sendHypixelError } from '../utils/errors.js';
 
 export async function guild(req, res, next) { 
 	const slug = res.locals.slug;

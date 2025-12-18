@@ -101,3 +101,6 @@ dist
 
 # Local Netlify folder
 .netlify
+
+# env
+.env

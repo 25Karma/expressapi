@@ -1,4 +1,4 @@
-import { getHypixelResource } from '../utils/requests';
+import { getHypixelResource } from '../utils/requests.js';
 
 export async function resources(req, res, next) {
 	let json = null;

@@ -1,4 +1,4 @@
-import { memjsClient } from '../utils/caches';
+import { memjsClient } from '../utils/caches.js';
 
 export async function names(req, res, next) {
 	let names = {};

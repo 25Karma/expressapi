@@ -1,7 +1,7 @@
 import express from 'express';
 
-import * as controllers from './controllers';
-import * as middlewares from './middlewares';
+import * as controllers from './controllers/index.js';
+import * as middlewares from './middlewares/index.js';
 
 const app = express();
 app.set('view engine', 'jade');

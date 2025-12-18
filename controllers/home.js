@@ -1,6 +1,6 @@
 import express from 'express';
 import fs from 'fs';
-import marked from 'marked';
+import { marked } from 'marked';
 import path from 'path';
 
 export const router = express.Router();

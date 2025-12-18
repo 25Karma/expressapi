@@ -1,4 +1,4 @@
-import { getHypixelStatus } from '../utils/requests';
+import { getHypixelStatus } from '../utils/requests.js';
 
 export async function status(req, res, next) { 
 	const uuid = res.locals.mojang.uuid;

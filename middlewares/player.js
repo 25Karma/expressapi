@@ -1,7 +1,7 @@
-import { memjsClient } from '../utils/caches';
-import * as filters from '../utils/filters';
-import { getHypixelPlayer } from '../utils/requests';
-import { sendHypixelError } from '../utils/errors';
+import { memjsClient } from '../utils/caches.js';
+import * as filters from '../utils/filters.js';
+import { getHypixelPlayer } from '../utils/requests.js';
+import { sendHypixelError } from '../utils/errors.js';
 
 export async function player(req, res, next) {
 	// Call the Hypixel API

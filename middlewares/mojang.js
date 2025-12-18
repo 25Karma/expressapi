@@ -1,6 +1,6 @@
-import { memjsClient } from '../utils/caches';
-import { filterMojang } from '../utils/filters';
-import { getMojang } from '../utils/requests';
+import { memjsClient } from '../utils/caches.js';
+import { filterMojang } from '../utils/filters.js';
+import { getMojang } from '../utils/requests.js';
 
 export async function mojang(req, res, next) {
 	const slug = res.locals.slug;
