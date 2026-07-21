@@ -1,5 +1,9 @@
 import memjs from 'memjs';
 
+/**
+ * Uses memcache from https://www.memcachier.com/
+ * To keep costs low, uses many free 25MB caches
+ */
 export function memjsClient(key) {
 	const sanitizedKey = sanitizeString(key);
 	const cachePrefix = sanitizedKey.charAt(0).toUpperCase();
