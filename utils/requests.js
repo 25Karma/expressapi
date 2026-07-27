@@ -3,12 +3,12 @@ import fetch from 'node-fetch';
 const key = process.env.HYPIXEL_SECRET_KEY
 
 export async function getMojang(slug) {
-	const response = await fetch(`https://playerdb.co/api/player/minecraft/${slug}`);
+	const response = await fetch(`https://mowojang.seraph.si/${slug}`);
 	const json = await response.json();
 	return {
 		response: response.status,
-		username: traverse(json, 'data.player.username'),
-		uuid: traverse(json, 'data.player.id'),
+		username: json?.name,
+		uuid: normalizeUUID(json?.id),
 	};
 }
 
@@ -48,12 +48,9 @@ export async function getHypixelResource(endpoint) {
 	}
 }
 
-function traverse(json, path, defaultValue = undefined) {
-	const paths = path.split('.');
-	for (const p of paths) {
-		if (json === undefined) return defaultValue;
-		json = json[p];
-	}
-	if (json === undefined) return defaultValue;
-	return json;
+function normalizeUUID(uuid) {
+    if (uuid && !uuid.includes("-")) {
+        return [uuid.slice(0, 8), uuid.slice(8, 12), uuid.slice(12, 16), uuid.slice(16, 20), uuid.slice(20)].join('-')
+    }
+    return uuid;
 }

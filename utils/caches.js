@@ -42,7 +42,7 @@ function getActiveClient(client, key) {
 			client.set(
 				key, 
 				Buffer.from(JSON.stringify(val)), 
-				{expires: 30*24*60*60}); // If this changes, update the Tip.js file in 25Karma
+				{expires: 86400}); // If this changes, update the Tip.js file in 25Karma
 		},
 		close: () => {
 			client.close();
